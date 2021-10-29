@@ -1,2 +1,2 @@
 # cucumber-java-aliexpress-v2
-This project is an improved version of the projects "cucumber-java-aliexpress"
+This project is an improved version of the project "cucumber-java-aliexpress"
