@@ -6,7 +6,7 @@
       Given the Aliexpress website is displayed
       When the client searches for "Iphone"
       And the client clicks the second product on the second page
-      Then the client see the product with at least 1 item
+      Then the client see the product with at least "1" item
 
 
 
