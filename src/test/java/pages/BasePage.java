@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class BasePage {
 
     protected WebDriver driver;
+    protected String mainWindow;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -24,8 +25,7 @@ public class BasePage {
 
     protected WebElement findElement(By locator){
         try {
-            WebElement element = driver.findElement(locator);
-            return element;
+            return driver.findElement(locator);
         }
         catch (NoSuchElementException e){
             System.out.println("Element not found: " + locator);
@@ -35,8 +35,7 @@ public class BasePage {
 
     protected List<WebElement> findElements(By locator){
         try {
-            List<WebElement> element = driver.findElements(locator);
-            return element;
+            return driver.findElements(locator);
         }
         catch (NoSuchElementException e){
             System.out.println("Elements not found: " + locator);
@@ -79,6 +78,18 @@ public class BasePage {
 
     protected Set<String> getWindowHandles(){
         return driver.getWindowHandles();
+    }
+
+    public boolean elementIsVisible(By locator){
+        try {
+            findElement(locator).isDisplayed();
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Error trying to find element.");
+            throw new NoSuchElementException(e.getMessage());
+        }
+
     }
 
 
