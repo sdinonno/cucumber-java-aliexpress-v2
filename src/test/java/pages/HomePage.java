@@ -1,4 +1,42 @@
 package pages;
 
+import org.apache.commons.lang.NotImplementedException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
 public class HomePage {
+
+    private WebDriver driver;
+    private By closeDiscountButton = By.xpath("//img[@class=\"btn-close\"]");
+    private By dontAllowButton = By.xpath("//div[contains(text(), \"Don't allow\")]");
+    private By searchBox = By.id("search-key");
+    private By searchButton = By.className("search-button");
+    private By pageResultsButtons = By.xpath("//div[@class = \"next-pagination-list\"]/button");
+    private By productResults = By.xpath("//div[@class=\"top-container\"]/following-sibling::div[1]/div");
+
+    public HomePage(WebDriver driver){
+        this.driver = driver;
+    }
+
+    public void searchProduct(String phrase){
+        throw new NotImplementedException();
+    }
+
+    public void goToResultsPage(int number){
+        throw new NotImplementedException();
+    }
+
+    public void openProduct(int position){
+        throw new NotImplementedException();
+    }
+
+    public void checkHasItems(){
+        throw new NotImplementedException();
+    }
+
+
+
+
+
+
 }
