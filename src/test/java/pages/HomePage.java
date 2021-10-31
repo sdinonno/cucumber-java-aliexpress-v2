@@ -1,8 +1,9 @@
 package pages;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.concurrent.TimeUnit;
 
 public class HomePage extends BasePage {
 
@@ -11,8 +12,9 @@ public class HomePage extends BasePage {
     private By dontAllowButton = By.xpath("//div[contains(text(), \"Don't allow\")]");
     private By searchBox = By.id("search-key");
     private By searchButton = By.className("search-button");
-    private By pageResultsButtons = By.xpath("//div[@class = \"next-pagination-list\"]/button");
-    private By productResults = By.xpath("//div[@class=\"top-container\"]/following-sibling::div[1]/div");
+
+    private String productResultsBaseXpath = "//div[@class=\"top-container\"]/following-sibling::div[1]/a";
+    private String pageResultsButtonsXpath = "//div[@class = \"next-pagination-list\"]/button";
 
 
     public HomePage(WebDriver driver){
@@ -25,20 +27,30 @@ public class HomePage extends BasePage {
     }
 
     public void goToResultsPage(int number){
-        String numberButton = pageResultsButtons.toString().concat(String.valueOf('[' + number + ']'));
+        String numberButton = pageResultsButtonsXpath.concat(('[' + String.valueOf(number) + ']'));
         By pageResult = By.xpath(numberButton);
 
+        executeScript("window.scrollTo(0,4115)");
         click(pageResult);
 
     }
 
     public ProductPage openProduct(int position){
-        String product = productResults.toString().concat(String.valueOf('[' + position + ']'));
+        String product = productResultsBaseXpath.concat("[" + String.valueOf(position) + "]/div[1]/img");
         By producResult = By.xpath(product);
         mainWindow = getWindowHandle();
 
         click(producResult);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         return new ProductPage(driver);
 
+    }
+
+    public void clickDontAllowNotifications(){
+        click(dontAllowButton);
+    }
+
+    public void clickCloseDiscount(){
+        click(closeDiscountButton);
     }
 }
