@@ -1,9 +1,8 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
 import java.util.Set;
@@ -11,11 +10,32 @@ import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
-    protected WebDriver driver;
+    public static WebDriver driver;
     protected String mainWindow;
+    private String baseURL = "https://aliexpress.com/";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public void setUp(){
+        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-gpu","--ignore-certificate-errors");
+
+        driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        navigate(baseURL);
+
+    }
+
+    public void tearDown(){
+        driver.close();
+        driver.quit();
+    }
+
+    public static WebDriver getDriver() {
+        return driver;
     }
 
     protected void navigate(String url){
@@ -90,6 +110,15 @@ public class BasePage {
             throw new NoSuchElementException(e.getMessage());
         }
 
+    }
+
+    public String getTitle(){
+        return driver.getTitle();
+    }
+
+    public void executeScript(String script){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript(script);
     }
 
 
